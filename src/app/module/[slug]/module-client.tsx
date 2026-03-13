@@ -77,7 +77,7 @@ export default function ModuleClient({
       </div>
 
       {/* Content sections with visuals */}
-      <div className="max-w-3xl mx-auto px-6 pb-12">
+      <div className="max-w-3xl mx-auto px-6 pb-12 overflow-visible">
         {sections.map((section) => {
           const VisualComponent = section.visualKey
             ? VISUAL_MAP[section.visualKey]
@@ -100,7 +100,7 @@ export default function ModuleClient({
 
         {/* Quiz */}
         <div className="pt-8 border-t border-border-subtle">
-          <Quiz questions={quiz} passThreshold={4} />
+          <Quiz questions={quiz} passThreshold={8} drawCount={10} />
         </div>
       </div>
     </>

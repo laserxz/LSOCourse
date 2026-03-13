@@ -1,0 +1,39 @@
+Slot,Section,Para,Current File,Status,Description (what photo should show),Alt Text
+1.1-0,1.1 EM Spectrum,0,satellite-dish.jpg,Stock,Radio tower or satellite dish — illustrating EM radiation surrounds us,Radio tower transmitting electromagnetic waves
+1.1-1,1.1 EM Spectrum,1,spectrum-rainbow.jpg,Stock,Wide EM spectrum chart from radio waves to gamma rays visible band highlighted,Full electromagnetic spectrum diagram
+1.1-3,1.1 EM Spectrum,3,prism-light.jpg,Stock,"Close-up colour bar: violet, blue, green, yellow, orange, red with nm labels",Visible spectrum colour bands
+1.1-4,1.1 EM Spectrum,4,laser-show.jpg,Stock,Laser show beams fanning out over a crowd at a music festival,Entertainment laser display at a concert
+1.2-0,1.2 Laser Light,0,spotlight-stage.jpg,Stock,"Side-by-side: conventional spotlight (wide, diffuse) vs laser beam (tight, vivid)",Theatre spotlight vs laser projector comparison
+1.2-1,1.2 Laser Light,1,laser-beams-rgb.jpg,Stock,Spectral output comparison: narrow laser spike vs broad lamp curve,Monochromatic laser light vs broad-spectrum lamp
+1.2-2,1.2 Laser Light,2,— EMPTY —,Placeholder,Wave diagram showing aligned peaks (coherent) vs random waves (incoherent),Coherent waves in phase
+1.2-3,1.2 Laser Light,3,green-laser.jpg,Stock,"Laser beam shooting across a dark landscape, barely spreading over hundreds of metres",Collimated laser beam traveling long distance
+1.2-4,1.2 Laser Light,4,laser-haze.jpg,Stock,Close-up of a laser beam converging to a pinpoint on a surface,Laser beam focused to a tiny point
+1.3-0,1.3 Classification,0,warning-sign.jpg,Stock,Close-up of a Class 4 laser hazard label / sticker on a projector housing,Laser classification label on a projector
+1.3-1,1.3 Classification,1,laser-stage.jpg,Stock,"Venue setup with barcode scanner, laser pointer, and show laser — different classes",Various laser products at a venue
+1.3-7,1.3 Classification,7,laser-purple.jpg,Stock,"A mid-power laser projector with Class 3B label, beam visible in haze",Class 3B laser projector
+1.3-8,1.3 Classification,8,laser-colorful.jpg,Stock,High-power Class 4 RGB projector producing bright beams through atmospheric haze,Class 4 laser projector in action
+1.4-0,1.4 Projector,0,laser-pattern.jpg,Stock,"Opened laser projector showing internal components — diodes, optics, galvos",Inside of a laser projector
+1.4-1,1.4 Projector,1,— EMPTY —,Placeholder,Macro photo of a laser diode on a heatsink — the gain medium,Laser diode semiconductor chip
+1.4-3,1.4 Projector,3,— EMPTY —,Placeholder,Close-up of galvo scanner pair — tiny mirrors on motor shafts,Galvanometer scanner mirrors
+1.4-4,1.4 Projector,4,laser-beams-rgb.jpg,Stock,"Red, green, and blue beams converging through dichroic mirrors into one white beam",RGB laser beams being combined
+1.4-5,1.4 Projector,5,— EMPTY —,Placeholder,"Side-by-side: DPSS module (crystal + pump diode) vs compact direct diode module",DPSS vs direct diode laser modules
+1.5-1,1.5 Beam Params,1,laser-beams-green.jpg,Stock,"Multiple laser beams side by side: blue 445nm, green 520nm, red 638nm with labels",Different coloured laser beams showing wavelength
+1.5-2,1.5 Beam Params,2,— EMPTY —,Placeholder,"Digital power meter displaying watts, measuring a laser beam output",Laser power meter reading
+1.5-3,1.5 Beam Params,3,laser-haze.jpg,Stock,"Laser beam expanding as it travels — tight at source, wider at far wall, with ruler",Beam divergence over distance
+1.5-5,1.5 Beam Params,5,— EMPTY —,Placeholder,Beam cross-section on a screen showing power distribution / beam profile,Irradiance measurement setup
+1.6-0,1.6 Eye Effects,0,eye-closeup.jpg,Stock,"Cross-section of the human eye with cornea, lens, and retina labelled",Human eye anatomy diagram
+1.6-1,1.6 Eye Effects,1,eye-closeup.jpg,Stock (duplicate),Diagram showing parallel laser beam entering eye and focusing to a point on retina,Laser beam focusing through the eye
+1.6-2,1.6 Eye Effects,2,— EMPTY —,Placeholder,Fundoscopy image showing a small retinal burn lesion (medical reference image),Retinal thermal burn from laser
+1.6-3,1.6 Eye Effects,3,— EMPTY —,Placeholder,"Comparison diagram: thermal (instant) vs photochemical (cumulative) injury timelines",Blue light photochemical damage
+1.6-5,1.6 Eye Effects,5,— EMPTY —,Placeholder,Simulation of what flash blindness looks like — dark spot in centre of vision,Flash blindness afterimage
+1.7-0,1.7 Skin Effects,0,laser-red.jpg,Stock,High-power laser beam hitting skin surface — visible heating effect,Skin exposure to laser beam
+1.7-2,1.7 Skin Effects,2,— EMPTY —,Placeholder,Close-up of skin reddening from Class 4 laser contact (mild burn),Laser burn on skin
+1.8-0,1.8 Aversion Response,0,bright-light-face.jpg,Stock,Person squinting and turning away from a bright light source — aversion response,Person blinking from bright light
+1.8-2,1.8 Aversion Response,2,— EMPTY —,Placeholder,"Time diagram: laser pulse duration (microseconds) vs blink response (250ms)",High-speed laser scan across eye
+1.8-3,1.8 Aversion Response,3,concert-crowd-lasers.jpg,Stock,Concert audience looking directly at laser beams — override behaviour in action,Festival crowd watching laser show
+1.8-4,1.8 Aversion Response,4,— EMPTY —,Placeholder,Visible green beam alongside invisible IR beam (shown as dotted line) — no trigger,Invisible infrared beam concept
+1.9-1,1.9 Wavelengths,1,laser-beams-blue.jpg,Stock,Vivid deep blue laser beam cutting through haze — 445nm direct diode,445nm blue laser beam
+1.9-2,1.9 Wavelengths,2,laser-beams-green.jpg,Stock,Bright green laser beam — appears brightest to the human eye,520nm green laser beam
+1.9-3,1.9 Wavelengths,3,— EMPTY —,Placeholder,DPSS laser module with IR filter highlighted — residual 1064nm hazard callout,532nm DPSS green laser with IR filter warning
+1.9-4,1.9 Wavelengths,4,laser-red.jpg,Stock,Red laser beam through haze — appears dimmer than green at same power,638nm red laser beam
+1.9-5,1.9 Wavelengths,5,laser-colorful.jpg,Stock,"RGB beams converging to produce white, with intermediate colours fanning out",RGB laser colour mixing

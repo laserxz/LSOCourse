@@ -4,6 +4,7 @@ interface QuizResultsProps {
   score: number;
   total: number;
   passed: boolean;
+  passThreshold: number;
   onRetake: () => void;
 }
 
@@ -11,6 +12,7 @@ export default function QuizResults({
   score,
   total,
   passed,
+  passThreshold,
   onRetake,
 }: QuizResultsProps) {
   return (
@@ -40,7 +42,7 @@ export default function QuizResults({
       <p className="text-sm text-text-secondary mb-6 max-w-md mx-auto">
         {passed
           ? "You\u2019ve demonstrated understanding of laser physics and classification. Module 2 is now unlocked."
-          : `You need ${Math.ceil(total * 0.7)} out of ${total} correct answers to pass. Review the content and try again.`}
+          : `You need ${passThreshold} out of ${total} correct answers to pass (80%). Review the content and try again. You\u2019ll get a different set of questions on your next attempt.`}
       </p>
 
       {!passed && (

@@ -17,11 +17,17 @@ function shuffleArray<T>(arr: T[]): T[] {
 interface QuizProps {
   questions: QuizQuestion[];
   passThreshold: number;
+  drawCount?: number;
 }
 
-export default function Quiz({ questions, passThreshold }: QuizProps) {
+function drawQuestions(bank: QuizQuestion[], count: number): QuizQuestion[] {
+  const shuffled = shuffleArray(bank);
+  return shuffled.slice(0, Math.min(count, shuffled.length));
+}
+
+export default function Quiz({ questions, passThreshold, drawCount = 10 }: QuizProps) {
   const [shuffledQuestions, setShuffledQuestions] = useState(() =>
-    shuffleArray(questions)
+    drawQuestions(questions, drawCount)
   );
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
@@ -50,7 +56,7 @@ export default function Quiz({ questions, passThreshold }: QuizProps) {
   }, [currentIndex, shuffledQuestions.length]);
 
   const handleRetake = useCallback(() => {
-    setShuffledQuestions(shuffleArray(questions));
+    setShuffledQuestions(drawQuestions(questions, drawCount));
     setCurrentIndex(0);
     setSelectedIndex(null);
     setSubmitted(false);
@@ -79,15 +85,16 @@ export default function Quiz({ questions, passThreshold }: QuizProps) {
         </div>
         <h2 className="text-base font-medium text-foreground">Module 1 Quiz</h2>
         <span className="text-xs text-text-tertiary ml-auto">
-          {passThreshold}/{questions.length} to pass
+          {passThreshold}/{shuffledQuestions.length} to pass (80%)
         </span>
       </div>
 
       {finished ? (
         <QuizResults
           score={score}
-          total={questions.length}
+          total={shuffledQuestions.length}
           passed={passed}
+          passThreshold={passThreshold}
           onRetake={handleRetake}
         />
       ) : (

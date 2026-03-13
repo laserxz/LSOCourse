@@ -42,3 +42,6 @@ next-env.d.ts
 
 # logs
 logs/*.log
+
+# TTS server-side cache (pre-built audio lives in public/audio/)
+.tts-cache/

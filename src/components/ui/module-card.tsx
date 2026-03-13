@@ -12,7 +12,7 @@ export default function ModuleCard({ module }: { module: ModuleMeta }) {
     >
       <div className="flex items-start justify-between mb-3">
         <span
-          className={`text-xs font-mono font-medium px-2 py-0.5 rounded ${
+          className={`text-sm font-mono font-medium px-2 py-0.5 rounded ${
             module.locked
               ? "bg-[rgba(255,255,255,0.05)] text-text-tertiary"
               : "bg-accent-red/10 text-accent-red"
@@ -22,8 +22,8 @@ export default function ModuleCard({ module }: { module: ModuleMeta }) {
         </span>
         {module.locked ? (
           <svg
-            width="14"
-            height="14"
+            width="16"
+            height="16"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -34,18 +34,18 @@ export default function ModuleCard({ module }: { module: ModuleMeta }) {
             <path d="M7 11V7a5 5 0 0 1 10 0v4" />
           </svg>
         ) : (
-          <span className="text-[10px] text-accent-green font-medium uppercase tracking-wider">
+          <span className="text-xs text-accent-green font-medium uppercase tracking-wider">
             Available
           </span>
         )}
       </div>
-      <h3 className="text-sm font-medium text-foreground mb-1.5">
+      <h3 className="text-base font-medium text-foreground mb-1.5">
         {module.title}
       </h3>
-      <p className="text-xs text-text-tertiary leading-relaxed mb-3">
+      <p className="text-sm text-text-tertiary leading-relaxed mb-3">
         {module.subtitle}
       </p>
-      <div className="flex items-center gap-3 text-[11px] text-text-tertiary">
+      <div className="flex items-center gap-3 text-xs text-text-tertiary">
         <span>{module.duration}</span>
         {module.quizQuestions > 0 && (
           <>
