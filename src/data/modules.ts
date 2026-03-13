@@ -17,9 +17,9 @@ export const modules: ModuleMeta[] = [
     title: "The Standard: AS/NZS IEC 60825.3:2022",
     subtitle: "Purpose, scope, and structure of the joint AU/NZ entertainment laser safety standard",
     duration: "~60 min",
-    sections: 0,
+    sections: 8,
     quizQuestions: 5,
-    locked: true,
+    locked: false,
   },
   {
     id: 3,

@@ -4,6 +4,10 @@ import Footer from "@/components/ui/footer";
 import { modules } from "@/data/modules";
 import { module1Sections } from "@/data/module1/content";
 import { module1Quiz } from "@/data/module1/quiz";
+import { module1Images, type ParaImage } from "@/data/module1/images";
+import { module2Sections } from "@/data/module2/content";
+import { module2Quiz } from "@/data/module2/quiz";
+import { module2Images } from "@/data/module2/images";
 import ModuleClient from "./module-client";
 
 const moduleContentMap: Record<
@@ -11,11 +15,18 @@ const moduleContentMap: Record<
   {
     sections: typeof module1Sections;
     quiz: typeof module1Quiz;
+    images?: Record<string, ParaImage>;
   }
 > = {
   "laser-physics-classification": {
     sections: module1Sections,
     quiz: module1Quiz,
+    images: module1Images,
+  },
+  "the-standard": {
+    sections: module2Sections,
+    quiz: module2Quiz,
+    images: module2Images,
   },
 };
 
@@ -64,6 +75,7 @@ export default async function ModulePage({
           module={module}
           sections={content.sections}
           quiz={content.quiz}
+          images={content.images}
         />
       </main>
       <Footer />

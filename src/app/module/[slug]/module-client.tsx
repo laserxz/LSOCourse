@@ -2,6 +2,7 @@
 
 import { ComponentType } from "react";
 import { ModuleMeta, Section, QuizQuestion } from "@/types";
+import { ParaImage } from "@/data/module1/images";
 import SectionBlock from "@/components/ui/section-block";
 import ProgressBar from "@/components/ui/progress-bar";
 import Quiz from "@/components/quiz/quiz";
@@ -33,12 +34,14 @@ interface ModuleClientProps {
   module: ModuleMeta;
   sections: Section[];
   quiz: QuizQuestion[];
+  images?: Record<string, ParaImage>;
 }
 
 export default function ModuleClient({
   module,
   sections,
   quiz,
+  images,
 }: ModuleClientProps) {
   return (
     <>
@@ -88,7 +91,7 @@ export default function ModuleClient({
               key={section.id}
               className="mb-12 pt-8 border-t border-border-subtle first:border-t-0 first:pt-0"
             >
-              <SectionBlock section={section} />
+              <SectionBlock section={section} images={images} />
               {VisualComponent && (
                 <div className="mt-8">
                   <VisualComponent />

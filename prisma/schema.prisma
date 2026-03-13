@@ -1,0 +1,197 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ── User (students + admins via role) ─────────────────────────
+model User {
+  id                  String    @id @default(uuid())
+  email               String    @unique
+  passwordHash        String
+  fullName            String
+  role                UserRole  @default(student)
+  emailVerified       Boolean   @default(false)
+  emailVerifyToken    String?   @unique
+  resetToken          String?   @unique
+  resetTokenExpiresAt DateTime?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  enrollment   Enrollment?
+  quizAttempts QuizAttempt[]
+  examAttempts ExamAttempt[]
+  certificates Certificate[]
+  photoId      PhotoId?
+
+  @@index([email])
+}
+
+enum UserRole {
+  student
+  admin
+}
+
+// ── Enrollment (one per student, tracks payment + access) ─────
+model Enrollment {
+  id               String           @id @default(uuid())
+  userId           String           @unique
+  stripeSessionId  String?          @unique
+  stripeCustomerId String?
+  amountPaid       Int              // cents (AUD)
+  couponId         String?
+  status           EnrollmentStatus @default(active)
+  enrolledAt       DateTime         @default(now())
+  expiresAt        DateTime         // enrolledAt + 24 months
+
+  user           User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  coupon         Coupon?          @relation(fields: [couponId], references: [id])
+  moduleProgress ModuleProgress[]
+
+  @@index([userId])
+  @@index([stripeSessionId])
+}
+
+enum EnrollmentStatus {
+  active
+  expired
+  suspended
+}
+
+// ── ModuleProgress (per-module completion tracking) ───────────
+model ModuleProgress {
+  id           String    @id @default(uuid())
+  enrollmentId String
+  moduleId     Int       // 1-11
+  completed    Boolean   @default(false)
+  completedAt  DateTime?
+  unlockedAt   DateTime  @default(now())
+
+  enrollment   Enrollment    @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
+  quizAttempts QuizAttempt[]
+
+  @@unique([enrollmentId, moduleId])
+  @@index([enrollmentId])
+}
+
+// ── QuizAttempt (module quiz attempts) ────────────────────────
+model QuizAttempt {
+  id               String   @id @default(uuid())
+  userId           String
+  moduleProgressId String
+  moduleId         Int
+  score            Int      // correct answers
+  totalQuestions   Int      // questions drawn
+  passed           Boolean
+  questionIds      Int[]    // IDs of questions drawn (for audit)
+  answers          Json     // { questionId: selectedIndex }
+  attemptedAt      DateTime @default(now())
+
+  user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  moduleProgress ModuleProgress @relation(fields: [moduleProgressId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([moduleProgressId])
+}
+
+// ── ExamAttempt (final exam attempts) ─────────────────────────
+model ExamAttempt {
+  id              String    @id @default(uuid())
+  userId          String
+  attemptNumber   Int       // 1, 2, 3 (or 4-6 for re-sit)
+  score           Int       // correct answers
+  totalQuestions  Int       // always 65
+  passed          Boolean
+  moduleBreakdown Json      // { "1": { correct: 5, total: 6 }, ... }
+  questionIds     Int[]     // question IDs drawn
+  answers         Json      // { questionId: selectedIndex }
+  startedAt       DateTime
+  submittedAt     DateTime?
+  timedOut        Boolean   @default(false)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+// ── PhotoId (identity verification before exam) ───────────────
+model PhotoId {
+  id         String        @id @default(uuid())
+  userId     String        @unique
+  filePath   String
+  mimeType   String
+  uploadedAt DateTime      @default(now())
+  status     PhotoIdStatus @default(pending)
+  reviewedAt DateTime?
+  reviewedBy String?       // admin user ID
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+enum PhotoIdStatus {
+  pending
+  approved
+  rejected
+}
+
+// ── Certificate ───────────────────────────────────────────────
+model Certificate {
+  id            String     @id @default(uuid())
+  userId        String
+  certNumber    String     @unique // LSO-YYMM-NNNNN
+  holderName    String
+  courseVersion  String     // e.g. "1.0"
+  issuedAt      DateTime   @default(now())
+  expiresAt     DateTime   // issuedAt + 3 years
+  examAttemptId String
+  pdfPath       String?    // local path to cached PDF
+  status        CertStatus @default(valid)
+  revokedAt     DateTime?
+  revokedReason String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([certNumber])
+}
+
+enum CertStatus {
+  valid
+  expired
+  revoked
+}
+
+// ── Coupon ────────────────────────────────────────────────────
+model Coupon {
+  id            String       @id @default(uuid())
+  code          String       @unique
+  discountType  DiscountType
+  discountValue Int          // percent (10=10%) or cents (10000=$100)
+  maxUses       Int?         // null = unlimited
+  usedCount     Int          @default(0)
+  validFrom     DateTime     @default(now())
+  validUntil    DateTime?
+  active        Boolean      @default(true)
+  createdAt     DateTime     @default(now())
+
+  enrollments Enrollment[]
+
+  @@index([code])
+}
+
+enum DiscountType {
+  percent
+  fixed
+}
+
+// ── SequenceCounter (for certificate numbers) ─────────────────
+model SequenceCounter {
+  id      String @id // e.g. "certificate"
+  prefix  String     // e.g. "LSO"
+  current Int    @default(0)
+}

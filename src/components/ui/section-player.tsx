@@ -94,7 +94,8 @@ export default function SectionPlayer({
       if (cached) return cached;
 
       // Try pre-generated static file first
-      const staticUrl = `/audio/module1/${sectionId}-${index}.mp3`;
+      const moduleNum = sectionId.split(".")[0];
+      const staticUrl = `/audio/module${moduleNum}/${sectionId}-${index}.mp3`;
       const staticRes = await fetch(staticUrl, { method: "HEAD" });
       if (staticRes.ok) {
         blobUrlsRef.current[index] = staticUrl;

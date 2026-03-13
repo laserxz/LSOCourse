@@ -11,7 +11,14 @@
 import crypto from "crypto";
 import fs from "fs/promises";
 import path from "path";
+import { Section } from "../src/types";
 import { module1Sections } from "../src/data/module1/content";
+import { module2Sections } from "../src/data/module2/content";
+
+const ALL_MODULES: { id: number; sections: Section[] }[] = [
+  { id: 1, sections: module1Sections },
+  { id: 2, sections: module2Sections },
+];
 
 // --- Config ---
 const ELEVENLABS_API_KEY = process.env.ELEVENLABS_API_KEY;
@@ -19,7 +26,6 @@ const VOICE_MALE = process.env.ELEVENLABS_VOICE_MALE || "JBFqnCBsd6RMkjVDRZzb";
 const MODEL_ID = process.env.ELEVENLABS_MODEL_ID || "eleven_flash_v2_5";
 
 const CACHE_DIR = path.join(process.cwd(), ".tts-cache");
-const OUTPUT_DIR = path.join(process.cwd(), "public", "audio", "module1");
 
 // --- Text processing (same as elevenlabs.ts) ---
 const ONES = [
@@ -104,65 +110,66 @@ async function generateSpeech(text: string): Promise<Buffer> {
 // --- Main ---
 async function main() {
   await fs.mkdir(CACHE_DIR, { recursive: true });
-  await fs.mkdir(OUTPUT_DIR, { recursive: true });
 
-  // Build list of all paragraphs with their static filenames
-  const items: { key: string; text: string }[] = [];
-  for (const section of module1Sections) {
-    const allParas = [
-      ...section.paragraphs,
-      ...(section.keyTakeaway ? [section.keyTakeaway] : []),
-    ];
-    for (let i = 0; i < allParas.length; i++) {
-      items.push({ key: `${section.id}-${i}`, text: allParas[i] });
+  let totalCached = 0;
+  let totalGenerated = 0;
+  let totalFailed = 0;
+
+  for (const mod of ALL_MODULES) {
+    const outputDir = path.join(process.cwd(), "public", "audio", `module${mod.id}`);
+    await fs.mkdir(outputDir, { recursive: true });
+
+    const items: { key: string; text: string }[] = [];
+    for (const section of mod.sections) {
+      const allParas = [
+        ...section.paragraphs,
+        ...(section.keyTakeaway ? [section.keyTakeaway] : []),
+      ];
+      for (let i = 0; i < allParas.length; i++) {
+        items.push({ key: `${section.id}-${i}`, text: allParas[i] });
+      }
+    }
+
+    console.log(`\nModule ${mod.id}: ${items.length} paragraphs`);
+
+    for (const item of items) {
+      const outputPath = path.join(outputDir, `${item.key}.mp3`);
+      const cacheFile = path.join(CACHE_DIR, cacheKey(item.text));
+
+      // Check if static file already exists
+      try {
+        await fs.access(outputPath);
+        console.log(`  [exists] ${item.key}.mp3`);
+        totalCached++;
+        continue;
+      } catch {}
+
+      // Check .tts-cache
+      try {
+        const data = await fs.readFile(cacheFile);
+        await fs.writeFile(outputPath, data);
+        console.log(`  [cache→static] ${item.key}.mp3`);
+        totalCached++;
+        continue;
+      } catch {}
+
+      // Generate via API
+      try {
+        console.log(`  [generating] ${item.key}.mp3 ...`);
+        const audio = await generateSpeech(item.text);
+        await fs.writeFile(outputPath, audio);
+        await fs.writeFile(cacheFile, audio);
+        totalGenerated++;
+        console.log(`  [done] ${item.key}.mp3 (${Math.round(audio.length / 1024)}KB)`);
+        await new Promise((r) => setTimeout(r, 500));
+      } catch (err) {
+        console.error(`  [FAILED] ${item.key}.mp3: ${err}`);
+        totalFailed++;
+      }
     }
   }
 
-  console.log(`Total paragraphs: ${items.length}`);
-
-  let cached = 0;
-  let generated = 0;
-  let failed = 0;
-
-  for (const item of items) {
-    const outputPath = path.join(OUTPUT_DIR, `${item.key}.mp3`);
-    const cacheFile = path.join(CACHE_DIR, cacheKey(item.text));
-
-    // Check if static file already exists
-    try {
-      await fs.access(outputPath);
-      console.log(`  [exists] ${item.key}.mp3`);
-      cached++;
-      continue;
-    } catch {}
-
-    // Check .tts-cache
-    try {
-      const data = await fs.readFile(cacheFile);
-      await fs.writeFile(outputPath, data);
-      console.log(`  [cache→static] ${item.key}.mp3`);
-      cached++;
-      continue;
-    } catch {}
-
-    // Generate via API
-    try {
-      console.log(`  [generating] ${item.key}.mp3 ...`);
-      const audio = await generateSpeech(item.text);
-      await fs.writeFile(outputPath, audio);
-      await fs.writeFile(cacheFile, audio); // also save to cache
-      generated++;
-      console.log(`  [done] ${item.key}.mp3 (${Math.round(audio.length / 1024)}KB)`);
-      // Small delay to avoid rate limiting
-      await new Promise((r) => setTimeout(r, 500));
-    } catch (err) {
-      console.error(`  [FAILED] ${item.key}.mp3: ${err}`);
-      failed++;
-    }
-  }
-
-  console.log(`\nDone: ${cached} cached, ${generated} generated, ${failed} failed`);
-  console.log(`Static files in: ${OUTPUT_DIR}`);
+  console.log(`\nDone: ${totalCached} cached, ${totalGenerated} generated, ${totalFailed} failed`);
 }
 
 main().catch(console.error);

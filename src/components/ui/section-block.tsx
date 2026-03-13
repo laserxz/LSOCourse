@@ -2,11 +2,16 @@
 
 import { useState, useCallback } from "react";
 import { Section } from "@/types";
+import { ParaImage } from "@/data/module1/images";
 import SectionPlayer from "./section-player";
 import ParaImageCard from "./para-image";
-import { module1Images } from "@/data/module1/images";
 
-export default function SectionBlock({ section }: { section: Section }) {
+interface SectionBlockProps {
+  section: Section;
+  images?: Record<string, ParaImage>;
+}
+
+export default function SectionBlock({ section, images }: SectionBlockProps) {
   const [activePara, setActivePara] = useState<number | null>(null);
 
   const allParagraphs = [
@@ -37,7 +42,7 @@ export default function SectionBlock({ section }: { section: Section }) {
       <div className="space-y-4">
         {section.paragraphs.map((p, i) => {
           const isActive = activePara === i;
-          const paraImage = module1Images[`${section.id}-${i}`] || null;
+          const paraImage = images?.[`${section.id}-${i}`] || null;
 
           return (
             <div key={i} className="relative">

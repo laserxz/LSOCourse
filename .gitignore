@@ -45,3 +45,12 @@ logs/*.log
 
 # TTS server-side cache (pre-built audio lives in public/audio/)
 .tts-cache/
+
+# Prisma generated client
+src/generated/
+
+# Uploads (photo ID etc)
+uploads/
+
+# Certificates (generated PDFs)
+certificates/
