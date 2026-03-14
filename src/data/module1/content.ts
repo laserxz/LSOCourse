@@ -39,7 +39,7 @@ export const module1Sections: Section[] = [
       "Class 1M \u2014 Safe for the unaided eye, but potentially hazardous if viewed with optical instruments (magnifying glasses, binoculars, microscopes) that collect and focus the beam.",
       "Class 2 \u2014 Low-power visible lasers (up to 1 mW). Safe for brief accidental exposure because the eye\u2019s natural aversion response (blinking, looking away) limits the exposure duration.",
       "Class 2M \u2014 Same principle as Class 2, but potentially hazardous if viewed with optical instruments.",
-      "Class 3R \u2014 Slightly exceeds Class 2 limits (up to 5 mW for visible beams). The \u201cR\u201d stands for \u201creduced\u201d requirements \u2014 lower risk than 3B, but direct viewing is potentially hazardous.",
+      "Class 3R \u2014 Slightly exceeds Class 2 limits (up to 5 mW for visible beams). The \u201cR\u201d stands for \u201crestricted\u201d requirements \u2014 lower risk than 3B, but direct viewing is potentially hazardous.",
       "Class 3B \u2014 Medium power (up to 500 mW). Beams are capable of causing eye injury from direct exposure, even with exposure durations shorter than the aversion response. This is the entry point for entertainment laser projectors.",
       "Class 4 \u2014 High power (above 500 mW). Beams are capable of causing eye injury from direct exposure and from viewing diffuse reflections. Class 4 lasers can also burn skin and act as fire ignition sources. Most professional entertainment laser projectors are Class 4.",
     ],

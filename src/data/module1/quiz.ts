@@ -10,9 +10,9 @@ export const module1Quiz: QuizQuestion[] = [
     options: ["Red", "Green", "Blue", "Ultraviolet"],
     correctIndex: 2,
     feedbackCorrect:
-      "Correct. 445 nm falls in the blue portion of the visible spectrum (approximately 450\u2013495 nm). This wavelength is produced by GaN direct diode lasers and is the most common blue source in entertainment projectors.",
+      "Correct. 445 nm sits at the violet-blue boundary (violet is 380\u2013450 nm, blue is 450\u2013495 nm) but is universally referred to as 'blue' in the entertainment laser industry. This wavelength is produced by GaN direct diode lasers and is the most common blue source in entertainment projectors.",
     feedbackIncorrect:
-      "445 nm is in the blue range. The visible spectrum runs from ~380 nm (violet) to ~780 nm (red). Blue occupies roughly 450\u2013495 nm. Refer to the wavelength\u2013colour table in Section 1.1.",
+      "445 nm sits at the violet-blue boundary but is universally called 'blue' in the entertainment laser industry. It is produced by GaN direct diode lasers. The visible spectrum runs from ~380 nm (violet) to ~780 nm (red). Refer to the wavelength\u2013colour table in Section 1.1.",
   },
   {
     id: 2,
@@ -241,11 +241,11 @@ export const module1Quiz: QuizQuestion[] = [
     question:
       "What does the \u2018R\u2019 in Class 3R stand for?",
     options: ["Restricted", "Reduced", "Regulated", "Reflected"],
-    correctIndex: 1,
+    correctIndex: 0,
     feedbackCorrect:
-      "Correct. The \u2018R\u2019 stands for \u2018reduced\u2019 requirements. Class 3R slightly exceeds Class 2 limits (up to 5 mW for visible beams) but has lower risk than Class 3B.",
+      "Correct. The \u2018R\u2019 stands for \u2018restricted\u2019 \u2014 meaning restricted requirements compared to Class 3B. Class 3R slightly exceeds Class 2 limits (up to 5 mW for visible beams) but has lower risk than Class 3B.",
     feedbackIncorrect:
-      "The \u2018R\u2019 stands for \u2018reduced\u2019 \u2014 meaning reduced safety requirements compared to Class 3B. See Section 1.3.",
+      "The \u2018R\u2019 stands for \u2018restricted\u2019 per IEC 60825-1 \u2014 meaning restricted (relaxed) requirements compared to Class 3B. See Section 1.3.",
   },
   {
     id: 18,
